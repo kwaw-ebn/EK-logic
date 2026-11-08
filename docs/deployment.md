@@ -64,7 +64,7 @@ The backend explicitly uses path-style addressing and computes checksums only wh
 
 ## Single-service Render deployment
 
-When workspace capacity is limited, use the repository-root `Dockerfile` with build context `.` to run the frontend and API in one Render web service. The public Next.js server listens on Render's `PORT`; FastAPI listens only on `127.0.0.1:8000`. The internal API URL is `http://127.0.0.1:8000`. Set `FRONTEND_URL` to the new service's exact HTTPS origin. Use `/api/health` as its readiness endpoint.
+When workspace capacity is limited, use the repository-root `Dockerfile` with build context `.` to run the frontend and API in one Render web service. The public Next.js server listens on Render's `PORT`; FastAPI listens only on `127.0.0.1:8000`. The internal API URL is `http://127.0.0.1:8000`. For this single-service layout, omit `FRONTEND_URL`: the backend uses Render's documented `RENDER_EXTERNAL_URL`, which is the exact assigned HTTPS origin. Set `FRONTEND_URL` explicitly only to override this with a custom frontend domain. Use `/api/health` as its readiness endpoint.
 
 The Python supervisor runs migrations before startup, forwards SIGTERM to both children and exits if either child stops. PostgreSQL and private file storage remain external on Neon. No upload bytes are stored on the ephemeral Render filesystem.
 
