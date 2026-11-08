@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: eklogic
+      POSTGRES_PASSWORD: development-only
+      POSTGRES_DB: eklogic
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U eklogic]
+      interval: 5s
+      retries: 10
+  api:
+    build: ./backend
+    env_file: .env
+    environment:
+      STORAGE_DIR: /app/data
+    volumes:
+      - uploads:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+    expose: ["8000"]
+  web:
+    build: ./frontend
+    environment:
+      API_INTERNAL_URL: http://api:8000
+    ports: ["3000:3000"]
+    depends_on: [api]
+volumes:
+  postgres:
+  uploads:

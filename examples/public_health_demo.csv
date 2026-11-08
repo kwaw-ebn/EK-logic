@@ -1,0 +1,9 @@
+date,district,service,visits,referrals,cost_ghs
+2026-01-01,Agona East,Nutrition,42,4,620
+2026-01-01,Winneba,Nutrition,35,3,510
+2026-02-01,Agona East,Nutrition,51,5,710
+2026-02-01,Winneba,Nutrition,39,2,560
+2026-03-01,Agona East,Nutrition,48,4,680
+2026-03-01,Winneba,Nutrition,44,4,630
+2026-04-01,Agona East,Nutrition,60,6,840
+2026-04-01,Winneba,Nutrition,49,3,700
