@@ -12,7 +12,7 @@ One warning comes from the installed Starlette TestClient's HTTPX deprecation no
 ## Verification limits
 
 - The managed browser preview could not reach the separately running API process. The complete browser journey was not verified locally. A Playwright test for register → upload → profile → chart → save → export is included in GitHub Actions.
-- PostgreSQL is covered by the configured CI service; local checks used SQLite. Check the repository Actions result before treating PostgreSQL validation as passed.
+- The initial GitHub Actions PostgreSQL job passed migrations, schema-drift checks and all 15 backend tests. The frontend production build also passed remotely. The browser test reached registration and upload, then exposed imprecise chart-control labels; these labels were corrected and CI was rerun. See the latest Actions result for the browser test outcome.
 - Docker is unavailable in the authoring environment. Container builds/Compose startup and live Neon/Render deployment were not executed.
 - Render's current Blueprint and environment-variable references were read. JSON Schema validation is recorded below; Render CLI platform validation and live deployment have not been run.
 - This is an initial working vertical slice, not completion of every Phase 1 requirement. Remaining features and production-hardening work are listed in README.md and architecture.md.

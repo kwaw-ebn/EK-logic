@@ -813,6 +813,7 @@ export default function Home() {
                       <label>
                         Group by
                         <select
+                          aria-label="Group by"
                           value={definition.dimension}
                           onChange={(e) => {
                             setDefinition({
@@ -837,6 +838,7 @@ export default function Home() {
                       <label>
                         Calculation
                         <select
+                          aria-label="Calculation"
                           value={definition.operation}
                           onChange={(e) => {
                             setDefinition({
@@ -854,6 +856,7 @@ export default function Home() {
                       <label>
                         Measure
                         <select
+                          aria-label="Measure"
                           value={definition.measure || ""}
                           disabled={definition.operation === "count"}
                           onChange={(e) => {
