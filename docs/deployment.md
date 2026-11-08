@@ -61,3 +61,11 @@ Neon Object Storage can provide the private S3-compatible bucket used by this ap
 - `AWS_SECRET_ACCESS_KEY`: its `s3_secret_access_key`.
 
 The backend explicitly uses path-style addressing and computes checksums only when required, for compatibility with S3-compatible providers. Credentials belong only on the API service. Do not place them in frontend variables or source control. See https://neon.com/docs/storage/get-started and https://neon.com/docs/storage/authentication.
+
+## Single-service Render deployment
+
+When workspace capacity is limited, use the repository-root `Dockerfile` with build context `.` to run the frontend and API in one Render web service. The public Next.js server listens on Render's `PORT`; FastAPI listens only on `127.0.0.1:8000`. The internal API URL is `http://127.0.0.1:8000`. Set `FRONTEND_URL` to the new service's exact HTTPS origin. Use `/api/health` as its readiness endpoint.
+
+The Python supervisor runs migrations before startup, forwards SIGTERM to both children and exits if either child stops. PostgreSQL and private file storage remain external on Neon. No upload bytes are stored on the ephemeral Render filesystem.
+
+A free 512 MB instance is suitable only for evaluating small datasets. Combined Node/Pandas memory usage and cold starts should be evaluated before wider use; this deployment has not been load tested. The two-service `render.yaml` is an alternative template and should not be applied to manage the manually created single service.
