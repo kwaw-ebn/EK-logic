@@ -7,7 +7,13 @@ class Storage:
         self.bucket = os.getenv('S3_BUCKET')
         if self.bucket:
             import boto3
-            self.client = boto3.client('s3', endpoint_url=os.getenv('S3_ENDPOINT_URL') or None)
+            from botocore.config import Config
+            self.client = boto3.client(
+                's3', endpoint_url=os.getenv('S3_ENDPOINT_URL') or None,
+                config=Config(s3={'addressing_style': 'path'},
+                              request_checksum_calculation='when_required',
+                              response_checksum_validation='when_required'),
+            )
         else:
             Path(STORAGE_DIR).mkdir(parents=True, exist_ok=True)
 

@@ -49,3 +49,15 @@ Complete the operational-hardening roadmap in architecture.md: verification/reco
 - https://developers.google.com/analytics/devguides/reporting/data/v1/basics
 - https://render.com/docs/blueprint-spec
 - https://render.com/docs/configure-environment-variables
+
+## Neon Object Storage
+
+Neon Object Storage can provide the private S3-compatible bucket used by this app. Get the branch's storage endpoint and region, create a private bucket and a branch-scoped storage credential, and configure the API's Render environment:
+
+- `S3_BUCKET`: private bucket name.
+- `S3_ENDPOINT_URL`: the branch's complete S3 endpoint.
+- `AWS_DEFAULT_REGION`: the region returned by Neon's storage API.
+- `AWS_ACCESS_KEY_ID`: the credential's `token_id`.
+- `AWS_SECRET_ACCESS_KEY`: its `s3_secret_access_key`.
+
+The backend explicitly uses path-style addressing and computes checksums only when required, for compatibility with S3-compatible providers. Credentials belong only on the API service. Do not place them in frontend variables or source control. See https://neon.com/docs/storage/get-started and https://neon.com/docs/storage/authentication.
